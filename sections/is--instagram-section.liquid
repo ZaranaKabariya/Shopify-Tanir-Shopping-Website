@@ -1,0 +1,69 @@
+<section>
+  <div class="instagrampage">
+    <div class="container">
+      <div class="instagram_heading">
+        <div class="mainhead"><h1>Instagram Shop</h1></div>
+        <div class="viewalll" target="_blank"><a href="https://www.instagram.com/zara_kabariya/">View All</a></div>
+      </div>
+    </div>
+    <div class="swiper-container new">
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="swiper-slide">
+            {% case block.type %}
+              {% when 'image' %}
+                <a href="https://www.instagram.com/zara_kabariya/" target="_blank"
+                  ><img src="{{ block.settings.image | img_url:"master" }}">
+                </a>
+            {% endcase %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+ {
+   "name": "Instagram",
+   "settings": [
+  ],  "blocks": [
+    {
+      "type": "image",
+      "name": "t:sections.collage.blocks.image.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.collage.blocks.image.settings.image.label"
+        }
+      ]
+    }
+   ],
+"presets":[
+   {
+     "name": "Instagram Section"
+   }
+ ]
+ }
+{% endschema %}
+
+<!-- Swiper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.6/js/swiper.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+  var swiper = new Swiper('.new', {
+       slidesPerView: 6,
+       slidesPerColumn: 2,
+    //slidesPerColumnFill: "row",
+    slidesPerGroup: 6,
+       spaceBetween: 10,
+     autoplay: true,
+          autoplaySpeed: 2000,
+       pagination: {
+         el: '.swiper-pagination',
+         clickable: true,
+       },
+     });
+</script>

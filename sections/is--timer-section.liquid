@@ -1,0 +1,99 @@
+<style>
+  .timer{
+    background-image: url({{section.settings.Bg_image|img_url:"master"}});
+    padding:200px 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+</style>
+<section>
+  <div class="timer">
+    <div class="container">
+      <div class="timer_content">
+        <P>LIMITED TIME ONLY</P>
+        <h1>
+          SUPER SALE UP TO <br>
+          40% OFF
+        </h1>
+        <P>Shop we selection of exclusive handbags and backpacks at reduced price dummy the Super Sale Hurry up!</P>
+        <div class="timeer" style="display:flex">
+          <div class="demo">
+            <p id="demo"></p>
+            <span>Days</span>
+          </div>
+          <span>:</span>
+          <div class="demo1">
+            <p id="demo1"></p>
+            <span>Hours</span>
+          </div>
+          <span>:</span>
+          <div class="demo2">
+            <p id="demo2"></p>
+            <span>Mins</span>
+          </div>
+          <span>:</span>
+          <div class="demo3">
+            <p id="demo3"></p>
+            <span>Secs</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Timer",
+   "settings": [
+        {
+          "type": "image_picker",
+          "id": "Bg_image",
+          "label": "Background Image"
+        }
+],
+
+  "blocks": [
+
+  ],
+
+  "presets":[
+    {
+      "name": "Timer Section"
+    }
+  ]
+}
+{% endschema %}
+<script>
+  // Set the date we're counting down to
+  var countDownDate = new Date("May 30, 2024 15:37:25").getTime();
+
+  // Update the count down every 1 second
+  var x = setInterval(function() {
+
+    // Get today's date and time
+    var now = new Date().getTime();
+
+    // Find the distance between now and the count down date
+    var distance = countDownDate - now;
+
+    // Time calculations for days, hours, minutes and seconds
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Display the result in the element with id="demo"
+    document.getElementById("demo").innerHTML = days;
+        document.getElementById("demo1").innerHTML =  hours;
+        document.getElementById("demo2").innerHTML = minutes;
+        document.getElementById("demo3").innerHTML =  seconds;
+
+    // If the count down is finished, write some text
+    if (distance < 0) {
+      clearInterval(x);
+      document.getElementById("demo").innerHTML = "EXPIRED";
+    }
+  }, 1000);
+</script>

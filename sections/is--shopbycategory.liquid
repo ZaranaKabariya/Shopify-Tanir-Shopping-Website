@@ -1,0 +1,240 @@
+<style>
+    /* Tabs --ratio-percent: 100% !important;*/
+    .tabs {margin-bottom: 20px;
+    }
+    ul#tabs-nav {
+      list-style: none;
+      margin: 0;
+      overflow: auto;
+      width: 24%;
+    }
+    ul#tabs-nav li {
+      float: left;
+      font-weight: bold;
+      padding: 8px;
+      cursor: pointer;
+    }
+    ul#tabs-nav li:hover,
+    ul#tabs-nav li.active {
+      background-color: #E6EBF2;
+
+    }
+    #tabs-nav li a {
+      text-decoration: none;
+      color: #000;
+    }
+    .tab-content {
+
+      background-color: #FFF;
+    }
+    .tabs .swiper-wrapper {
+    margin: 20px 0;
+  }
+  .tabs .swiper-pagination {
+    bottom: -8px;
+  }
+</style>
+<section>
+  <div class="tabs">
+    <div
+      class="container"
+    >
+      <div
+        style="
+          display:flex;  justify-content: space-between;
+          align-items: center;
+        "
+      >
+        <h2 class="productheading {{ section.settings.heading_size }}">
+          {{ section.settings.title }}
+        </h2>
+        <ul id="tabs-nav">
+          <li><a href="#tab1">New Arrivals</a></li>
+          <li><a href="#tab2">Best Sellers</a></li>
+          <li><a href="#tab3">Sale</a></li>
+        </ul>
+      </div>
+    </div>
+    <!-- END tabs-nav -->
+    <div id="tabs-content">
+      <div id="tab1" class="tab-content">
+        <div class="swiper-container mynew1 container1">
+          <div class="swiper-wrapper">
+            {%- for block in section.blocks -%}
+              <div class="swiper-slide" style="width: 350px;">
+                {%- case block.type -%}
+                  {%- when 'product' -%}
+                    {%- assign placeholder_image = 'product-apparel-' | append: placeholder_image_index -%}
+                    {% render 'card-product',
+                      card_product: block.settings.product,
+                      show_secondary_image: section.settings.second_image,
+                      show_vendor: section.settings.show_vendor,
+                      show_quick_add: section.settings.enable_quick_add,
+                      extend_height: true,
+                      placeholder_image: placeholder_image
+                    %}
+                {%- endcase -%}
+              </div>
+            {%- endfor -%}
+          </div>
+          <!-- <div class="swiper-pagination"></div> -->
+        </div>
+      </div>
+      <div id="tab2" class="tab-content">
+        <div class="swiper-container mynew1 container1">
+          <div class="swiper-wrapper">
+            {%- for block in section.blocks -%}
+              <div class="swiper-slide" style="width: 350px;">
+                {%- case block.type -%}
+                  {%- when 'productt' -%}
+                    {%- assign placeholder_image = 'product-apparel-' | append: placeholder_image_index -%}
+                    {% render 'card-product',
+                      card_product: block.settings.product1,
+                      show_secondary_image: section.settings.second_image,
+                      show_vendor: section.settings.show_vendor,
+                      show_quick_add: section.settings.enable_quick_add,
+                      extend_height: true,
+                      placeholder_image: placeholder_image
+                    %}
+                {%- endcase -%}
+              </div>
+            {%- endfor -%}
+          </div>
+          <!-- <div class="swiper-pagination"></div> -->
+        </div>
+      </div>
+      <div id="tab3" class="tab-content">
+        <div class="swiper-container mynew1 container1">
+          <div class="swiper-wrapper">
+            {%- for block in section.blocks -%}
+              <div class="swiper-slide" style="width: 350px;">
+                {%- case block.type -%}
+                  {%- when 'pro' -%}
+                    {%- assign placeholder_image = 'product-apparel-' | append: placeholder_image_index -%}
+                    {% render 'card-product',
+                      card_product: block.settings.product2,
+                      extend_height: true,
+                      placeholder_image: placeholder_image,
+                      show_secondary_image: section.settings.second_image,
+                      show_vendor: section.settings.show_vendor,
+                      show_quick_add: section.settings.enable_quick_add
+                    %}
+                {%- endcase -%}
+              </div>
+            {%- endfor -%}
+          </div>
+          <!-- <div class="swiper-pagination"></div> -->
+        </div>
+      </div>
+    </div>
+    <!-- END tabs-content -->
+  </div>
+</section>
+<!-- END tabs -->
+
+{% schema %}
+{
+  "name": "Product Collection",
+  "settings":  [
+   {
+      "type": "inline_richtext",
+      "id": "title",
+      "default": "Featured collection",
+      "label": "t:sections.featured-collection.settings.title.label"
+    },
+    {
+          "type": "checkbox",
+          "id": "second_image",
+          "default": false,
+          "label": "t:sections.collage.blocks.product.settings.second_image.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "default": false,
+      "label": "t:sections.featured-collection.settings.show_vendor.label"
+    },
+
+    {
+      "type": "checkbox",
+      "id": "enable_quick_add",
+      "default": false,
+      "label": "t:sections.featured-collection.settings.enable_quick_buy.label"
+    }
+    ],
+  "blocks": [
+     {
+      "type": "product",
+      "name": "New Arrivals",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "t:sections.collage.blocks.product.settings.product.label"
+        }
+      ]
+    },
+       {
+      "type": "productt",
+      "name": "Best Sellers",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product1",
+          "label": "t:sections.collage.blocks.product.settings.product.label"
+        }
+      ]
+    },
+       {
+      "type": "pro",
+      "name": "Sale",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product2",
+          "label": "t:sections.collage.blocks.product.settings.product.label"
+        }
+      ]
+    }
+  ],
+
+  "presets":[
+  {
+    "name": "shop by"
+  }
+]
+}
+{% endschema %}
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    // Show the first tab and hide the rest
+  $('#tabs-nav li:first-child').addClass('active');
+  $('.tab-content').hide();
+  $('.tab-content:first').show();
+
+  // Click function
+  $('#tabs-nav li').click(function(){
+    $('#tabs-nav li').removeClass('active');
+    $(this).addClass('active');
+    $('.tab-content').hide();
+
+    var activeTab = $(this).find('a').attr('href');
+    $(activeTab).fadeIn();
+    return false;
+  });
+</script>
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<!-- Initialize Swiper -->
+<script>
+  var swiper1 = new Swiper(".mynew1", {
+    slidesPerView: 3,
+    spaceBetween: 30,
+    autoplay:false,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+  });
+</script>

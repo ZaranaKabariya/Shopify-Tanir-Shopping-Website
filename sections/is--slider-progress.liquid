@@ -1,0 +1,176 @@
+<style>
+  .process{
+    padding:100px 0;
+  }
+    /* Progress bar */
+  .process  .progress {
+      position: relative;
+      display: block;
+      margin-top: 40px;
+      margin-left: 0;
+      width: calc(100% - 200px);
+      height: 3px;
+      border-radius: 10px;
+      overflow: hidden;
+      background-color: transparent;
+      background-image: linear-gradient(to right, #000, #000);
+      background-repeat: no-repeat;
+      background-size: 0 100%;
+      opacity: 1;
+      z-index: 1;
+      transition: background-size 0.4s ease-in-out;
+    }
+   .process .progress::after {
+      content: "";
+      width: 100%;
+      height: 1px;
+      background: #707070;
+      position: absolute;
+      left: 0;
+      top: 1px;
+      opacity: 0.5;
+    }
+    @media (max-width: 767px) {
+      .process .progress {
+        display: none;
+      }
+    }
+
+    /* slides */
+   .process .slider .slick-slide {
+      margin-right: 30px;
+    }
+    .process .slider .image {
+      width: 400px;
+      max-height: 300px;
+      overflow: hidden;
+    }
+   .process .slider .image img {
+      width: 400px;
+      height: 100%;
+      object-fit: cover;
+    }
+     .process button.slick-arrow::before {
+      display: none;
+    }
+  .process    button.slick-arrow,
+   .process   button.slick-arrow:hover,
+   .process  button.slick-arrow:focus {
+      outline: 0;
+      bottom: -60px;
+      top: auto;
+      background-image: url(https://sudip-bhowmick.github.io/images/img/slider-arrow-next.svg) !important;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+  .process   button.slick-prev.slick-arrow {
+      transform: scalex(-1) translate(-50%, -50%);
+      right: 100px;
+      left: auto;
+    }
+   .process  button.slick-next.slick-arrow {
+      right: 0;
+    }
+</style>
+
+<section>
+  <div class="process">
+    <h1>Slick slider progress bar</h1>
+
+    <div class="slider slider11">
+      {%- for block in section.blocks -%}
+        <div>
+          <div class="image">
+            {%- case block.type -%}
+              {%- when 'product' -%}
+                {%- assign placeholder_image = 'product-apparel-' | append: placeholder_image_index -%}
+                {% render 'card-product',
+                  card_product: block.settings.product,
+                  show_secondary_image: section.settings.second_image,
+                  show_vendor: section.settings.show_vendor,
+                  show_quick_add: section.settings.enable_quick_add,
+                  extend_height: true,
+                  placeholder_image: placeholder_image
+                %}
+            {%- endcase -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="progress"></div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "progress name",
+  "settings": [],  "blocks": [
+    {
+      "type": "product",
+      "name": "t:sections.collage.blocks.product.name",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "t:sections.collage.blocks.product.settings.product.label"
+        }
+      ]
+    }
+
+  ],
+
+  "presets": [
+    {
+      "name": "progress by"
+    }
+  ]
+}
+{% endschema %}
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<script>
+  var $slider = jQuery(".slider");
+
+    if ($slider.length) {
+      let currentSlide;
+      let slidesCount;
+      let sliderCounter = document.createElement("div");
+
+      $slider.slick({
+        dots: false,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        pauseOnFocus: false,
+        pauseOnHover: false,
+        arrows: true,
+        cssEase: "linear",
+        variableWidth: true
+      });
+
+      function progress(sliders) {
+        sliders.each(function () {
+          var slider = jQuery(this);
+          var $progressBar = slider
+            .parentsUntil(".variable_slider_row")
+            .find(".progress");
+
+          slider.on(
+            "beforeChange",
+            function (event, slick, currentSlide, nextSlide) {
+              var calc = ((nextSlide + 1) / slick.slideCount) * 100;
+              $progressBar.css("background-size", calc + "% 100%");
+            }
+          );
+        });
+      }
+
+      progress($slider);
+    }
+</script>

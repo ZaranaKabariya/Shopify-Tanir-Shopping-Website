@@ -1,0 +1,205 @@
+<style>
+    /* Progress bar */
+  .product  .progress {
+      position: relative;
+      display: block;
+      margin-top: 40px;
+      margin-left: 0;
+      width: calc(100% - 150px);
+      height: 3px;
+      border-radius: 10px;
+      overflow: hidden;
+      background-color: #E9EEEE;
+      background-image: linear-gradient(to right, #2A555A, #2A555A);
+      background-repeat: no-repeat;
+      background-size: 0 100%;
+      opacity: 1;
+      z-index: 1;
+      transition: background-size 0.4s ease-in-out;
+    }
+   .product .progress::after {
+      content: "";
+      width: 100%;
+      height: 1px;
+      background: #707070;
+      position: absolute;
+      left: 0;
+      top: 1px;
+      opacity: 0.5;
+    }
+    @media (max-width: 767px) {
+      .process .progress {
+        display: none;
+      }
+    }
+
+    /* slides */
+   .product .slider .slick-slide {
+      margin-right: 30px;
+    }
+    .product .slider .image {
+      width: 400px;
+      max-height: 300px;
+      overflow: hidden;
+    }
+   .product .slider .image img {
+      width: 400px;
+      height: 100%;
+      object-fit: cover;
+    }
+     .product button.slick-arrow::before {
+      display: none;
+    }
+   .product  button.slick-arrow,
+   .product  button.slick-arrow:hover,
+   .product  button.slick-arrow:focus {
+      outline: 0;
+      bottom: -60px;
+      top: auto;
+      background-image: url(https://sudip-bhowmick.github.io/images/img/slider-arrow-next.svg) !important;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+  .product  button.slick-prev.slick-arrow {
+      transform: scalex(-1) translate(-50%, -50%);
+      right: 100px;
+      left: auto;
+    }
+   .product  button.slick-next.slick-arrow {
+      right: 0;
+    }
+</style>
+<section>
+  <div class="product">
+    <div class="container">
+      <div class="newarrival">
+        <h2 class="productheading {{ section.settings.heading_size }}">
+          {{ section.settings.heading }}
+        </h2>
+        <div><a href="/collections/new-collection" target="_blank" class="viewall1">View All</a></div>
+      </div>
+
+      <div class="slider slider12">
+        {%- for block in section.blocks -%}
+          <div>
+            <div class="image">
+              {%- case block.type -%}
+                {%- when 'product' -%}
+                  {%- assign placeholder_image = 'product-apparel-' | append: placeholder_image_index -%}
+                  {% render 'card-product',
+                    card_product: block.settings.product,
+                    show_secondary_image: section.settings.second_image,
+                    show_vendor: section.settings.show_vendor,
+                    show_quick_add: section.settings.enable_quick_add,
+                    extend_height: true,
+                    placeholder_image: placeholder_image
+                  %}
+              {%- endcase -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <div class="progress"></div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Product Collection",
+  "settings":  [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "default": "Multimedia collage",
+      "label": "t:sections.collage.settings.heading.label"
+    },
+    {
+          "type": "checkbox",
+          "id": "second_image",
+          "default": false,
+          "label": "t:sections.collage.blocks.product.settings.second_image.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "default": false,
+      "label": "t:sections.featured-collection.settings.show_vendor.label"
+    },
+
+    {
+      "type": "checkbox",
+      "id": "enable_quick_add",
+      "default": false,
+      "label": "t:sections.featured-collection.settings.enable_quick_buy.label"
+    }
+    ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "t:sections.collage.blocks.product.name",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "t:sections.collage.blocks.product.settings.product.label"
+        }
+      ]
+    }
+
+  ],
+
+  "presets":[
+  {
+    "name": "new arrival Section"
+  }
+]
+}
+{% endschema %}
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<script>
+  var $slider = jQuery(".slider12");
+
+    if ($slider.length) {
+      let currentSlide;
+      let slidesCount;
+      let sliderCounter = document.createElement("div");
+
+      $slider.slick({
+        dots: false,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        pauseOnFocus: false,
+        pauseOnHover: false,
+        arrows: true,
+        cssEase: "linear",
+        variableWidth: true
+      });
+
+      function progress(sliders) {
+        sliders.each(function () {
+          var slider = jQuery(this);
+          var $progressBar = slider
+            .parentsUntil(".variable_slider_row")
+            .find(".progress");
+
+          slider.on(
+            "beforeChange",
+            function (event, slick, currentSlide, nextSlide) {
+              var calc = ((nextSlide + 1) / slick.slideCount) * 100;
+              $progressBar.css("background-size", calc + "% 100%");
+            }
+          );
+        });
+      }
+
+      progress($slider);
+    }
+</script>

@@ -1,0 +1,53 @@
+.related-products {
+  display: block;
+}
+
+.related-products__heading {
+  margin: 0 0 3rem;
+  font-family: "League Spartan";
+  font-size: 30px;
+  font-weight: 500;
+}
+/*edited*/
+.related_pro .card__inner {
+  --ratio-percent: 90% !important;
+}
+
+.related_pro .card__inner .card__media {
+  border-radius: 10px;
+}
+
+.related_pro .card__content {
+  text-align: center;
+  font-family: "Poppins" !important;
+}
+.related_pro .card-information {
+  text-align: center;
+}
+.related_pro .card__content .h5 {
+  font-size: 20px !important;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.related_pro .card-information .caption-with-letter-spacing {
+  text-transform: none;
+  font-size: 14px;
+  color: #b0b0b0;
+}
+.related_pro .card-information .price {
+  font-size: 1.5rem;
+}
+.related_pro .card-information {
+  padding-bottom: 0px;
+  padding-top: 0px;
+}
+.related_pro .card-information > * + * {
+  margin-top: 0;
+}
+.related_pro
+  .card-information
+  > *:not(.visually-hidden:first-child)
+  + *:not(.rating):not(.card__information-volume-pricing-note) {
+  margin-top: 0;
+}
